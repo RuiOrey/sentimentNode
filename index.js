@@ -19,8 +19,11 @@ var sentiment = require('sentiment');
 var request = require("request");
 var cheerio = require("cheerio");
 
+
+
+
 request({
-  uri: "https://en.wikivoyage.org/wiki/Palm_Springs",
+  uri: "https://en.wikivoyage.org/wiki/"+process.argv[2],
 }, function(error, response, body) {
   var $ = cheerio.load(body);
 
@@ -38,9 +41,9 @@ var pontuation=0;
 
 for(var k in str2) {
 	
-	if (str2[k].indexOf("gay") > -1){
+	if (str2[k].indexOf(process.argv[3]) > -1){
 
-		console.log( "\ngay? " + (str2[k].indexOf("gay") > -1));
+		console.log( "\n " + process.argv[3] + (str2[k].indexOf(process.argv[3]) > -1));
 		
 		console.log("\n\n!!");
 		
@@ -59,8 +62,13 @@ for(var k in str2) {
 	}
 }
 
-console.log("score sum: " + pontuation + "\nnumber of phrases summed:"+count + "\nmean: "+ (pontuation/count));
-  
+  process.argv.forEach(function (val, index, array) {
+  console.log(index + ': ' + val);
+
+
+
+});
+  console.log("\nscore sum: " + pontuation + "\nnumber of phrases summed:"+count + "\nmean: "+ (pontuation/count)+"\n");
 });
 
 
@@ -93,3 +101,4 @@ for(var k in str2) {
    	var r3 = sentiment(str2[k]);
 //	console.log(r3.score);
 }
+
